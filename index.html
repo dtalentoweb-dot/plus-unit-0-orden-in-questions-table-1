@@ -18,14 +18,13 @@
     max-width: 950px;
   }
 
-  /* ESTRUCTURA DE TABLA VISUAL */
   .visual-table {
     width: 100%;
-    border-collapse: separate; /* Necesario para el espacio entre filas */
-    border-spacing: 0 12px; /* Espacio vertical entre "tarjetas" */
+    border-collapse: separate;
+    border-spacing: 0 12px;
   }
 
-  /* --- CABECERAS VISUALES --- */
+  /* CABECERAS */
   .visual-table th {
     text-align: left;
     padding: 10px 15px;
@@ -39,13 +38,13 @@
     display: block; font-size: 0.75em; text-transform: none; color: #95a5a6; margin-top: 4px; font-weight: 600; margin-left: 32px;
   }
 
-  /* Colores de Cabecera */
-  .th-aux { color: #2d55ff; } /* Azul intenso */
-  .th-sub { color: #f39c12; } /* Naranja */
-  .th-verb { color: #e91e63; } /* Rosa fuerte */
-  .th-ans { color: #27ae60; } /* Verde */
+  /* Colores Cabecera */
+  .th-aux { color: #2d55ff; }
+  .th-sub { color: #f39c12; }
+  .th-verb { color: #e91e63; }
+  .th-ans { color: #27ae60; }
 
-  /* --- ESTILOS DE LAS TARJETAS (FILAS) --- */
+  /* ESTILOS DE FILAS */
   .card-row td {
     background: #fff;
     padding: 18px 20px;
@@ -56,28 +55,24 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.04);
   }
 
-  /* Bordes redondeados extremos para efecto "píldora" */
   .card-row td:first-child {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    border-left: 6px solid #2d55ff; /* Borde azul grueso */
+    border-left: 6px solid #2d55ff;
   }
   .card-row td:last-child {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
   }
 
-  /* --- CONTENIDO DE LAS CELDAS --- */
-  /* 1. Auxiliar */
+  /* ELEMENTOS INTERNOS */
   .aux-text { font-size: 1.3em; font-weight: 800; color: #2d55ff; }
 
-  /* 2. Sujeto */
   .subject-pill {
     background-color: #fef5e6; color: #d35400;
     padding: 6px 12px; border-radius: 20px; font-weight: 700;
   }
 
-  /* 3. Verbo Principal (Píldora destacada) */
   .verb-highlight-pill {
     background-color: #fad2e1; color: #c2185b;
     padding: 6px 12px; border-radius: 20px; font-weight: 800;
@@ -85,20 +80,30 @@
   }
   .rest-sentence { color: #7f8c8d; font-weight: 600; }
   
-  /* 4. Respuestas cortas */
+  /* --- CORRECCIÓN RESPUESTAS CORTAS --- */
   .short-ans-container {
     display: flex; flex-direction: column; gap: 6px;
   }
-  .ans-item { font-weight: 700; font-size: 0.9em; display: flex; align-items: center; }
-  .ans-icon { margin-right: 8px; }
-  .ans-yes { color: #27ae60; } /* Verde */
-  .ans-no { color: #c0392b; } /* Rojo */
+  
+  /* Aquí está el cambio: display block normal para respetar espacios */
+  .ans-item { 
+    font-weight: 700; 
+    font-size: 0.9em; 
+    display: block; /* Antes era flex, eso causaba el error */
+    line-height: 1.4;
+  }
+  
+  .ans-icon { 
+    margin-right: 5px; 
+    vertical-align: middle; /* Alinea el icono con el texto verticalmente */
+    font-size: 1.1em;
+  }
+  
+  .ans-yes { color: #27ae60; }
+  .ans-no { color: #c0392b; }
   .ans-aux-match { text-decoration: underline; text-decoration-thickness: 2px; }
 
-
-  /* --- INTERACTIVIDAD (HOVERS) --- */
-
-  /* A) Levantar la tarjeta al pasar el ratón */
+  /* INTERACTIVIDAD */
   .card-row:hover td {
     transform: translateY(-4px);
     box-shadow: 0 12px 20px rgba(45, 85, 255, 0.15);
@@ -106,18 +111,16 @@
     border-bottom-color: #e0e6ed;
   }
 
-  /* B) El "Truco Gramatical": Hover en auxiliar ilumina la respuesta */
-  /* Usamos :has() para detectar si el primer td tiene hover */
   .card-row:has(td:first-child:hover) td:last-child {
-    background-color: #d4edda !important; /* Fondo verde */
-    transform: scale(1.03); /* Un poco más grande */
-    box-shadow: 0 0 0 3px #27ae60 inset; /* Borde interno verde */
+    background-color: #d4edda !important;
+    transform: scale(1.03);
+    box-shadow: 0 0 0 3px #27ae60 inset;
   }
    .card-row:has(td:first-child:hover) .ans-aux-match {
        font-weight: 900; background-color: rgba(39, 174, 96, 0.2);
    }
 
-  /* Responsive básico */
+  /* Responsive */
   @media (max-width: 768px) {
     body { padding: 10px; }
     .visual-table th { padding: 5px; }
@@ -157,57 +160,49 @@
     <tbody>
       
       <tr class="card-row">
-        <td title="Hover me to see the connection!"><span class="aux-text">Do</span></td>
+        <td title="Pasa el ratón para ver la conexión"><span class="aux-text">Do</span></td>
         <td><span class="subject-pill">you</span></td>
-        <td>
-          <span class="verb-highlight-pill">like</span><span class="rest-sentence">chocolate?</span>
-        </td>
+        <td><span class="verb-highlight-pill">like</span><span class="rest-sentence">chocolate?</span></td>
         <td>
           <div class="short-ans-container">
-            <div class="ans-item ans-yes"><span class="ans-icon">✅</span>Yes, I <span class="ans-aux-match"> do</span>.</div>
-            <div class="ans-item ans-no"><span class="ans-icon">❌</span>No, I <span class="ans-aux-match"> don’t</span>.</div>
+            <div class="ans-item ans-yes"><span class="ans-icon">✅</span>Yes, I&nbsp;&nbsp;<span class="ans-aux-match">do</span>.</div>
+            <div class="ans-item ans-no"><span class="ans-icon">❌</span>No, I&nbsp;&nbsp;<span class="ans-aux-match">don’t</span>.</div>
           </div>
         </td>
       </tr>
 
       <tr class="card-row">
-        <td title="Hover me to see the connection!"><span class="aux-text">Does</span></td>
+        <td title="Pasa el ratón para ver la conexión"><span class="aux-text">Does</span></td>
         <td><span class="subject-pill">she</span></td>
-        <td>
-          <span class="verb-highlight-pill">know</span><span class="rest-sentence">the answer?</span>
-        </td>
+        <td><span class="verb-highlight-pill">know</span><span class="rest-sentence">the answer?</span></td>
         <td>
           <div class="short-ans-container">
-            <div class="ans-item ans-yes"><span class="ans-icon">✅</span>Yes, she <span class="ans-aux-match"> does</span>.</div>
-            <div class="ans-item ans-no"><span class="ans-icon">❌</span>No, she <span class="ans-aux-match"> doesn't</span>.</div>
+            <div class="ans-item ans-yes"><span class="ans-icon">✅</span>Yes, she&nbsp;&nbsp;<span class="ans-aux-match">does</span>.</div>
+            <div class="ans-item ans-no"><span class="ans-icon">❌</span>No, she&nbsp;&nbsp;<span class="ans-aux-match">doesn't</span>.</div>
           </div>
         </td>
       </tr>
 
       <tr class="card-row">
-        <td title="Hover me to see the connection!"><span class="aux-text">Can</span></td>
+        <td title="Pasa el ratón para ver la conexión"><span class="aux-text">Can</span></td>
         <td><span class="subject-pill">you</span></td>
-        <td>
-          <span class="verb-highlight-pill">open</span><span class="rest-sentence">the door?</span>
-        </td>
+        <td><span class="verb-highlight-pill">open</span><span class="rest-sentence">the door?</span></td>
         <td>
           <div class="short-ans-container">
-            <div class="ans-item ans-yes"><span class="ans-icon">✅</span>Yes, I <span class="ans-aux-match"> can</span>.</div>
-            <div class="ans-item ans-no"><span class="ans-icon">❌</span>No, I <span class="ans-aux-match"> can’t</span>.</div>
+            <div class="ans-item ans-yes"><span class="ans-icon">✅</span>Yes, I&nbsp;&nbsp;<span class="ans-aux-match">can</span>.</div>
+            <div class="ans-item ans-no"><span class="ans-icon">❌</span>No, I&nbsp;&nbsp;<span class="ans-aux-match">can’t</span>.</div>
           </div>
         </td>
       </tr>
 
       <tr class="card-row">
-        <td title="Hover me to see the connection!"><span class="aux-text">Have</span></td>
+        <td title="Pasa el ratón para ver la conexión"><span class="aux-text">Have</span></td>
         <td><span class="subject-pill">you</span></td>
-        <td>
-          <span class="verb-highlight-pill">been</span><span class="rest-sentence">to London before?</span>
-        </td>
+        <td><span class="verb-highlight-pill">been</span><span class="rest-sentence">to London before?</span></td>
         <td>
           <div class="short-ans-container">
-            <div class="ans-item ans-yes"><span class="ans-icon">✅</span>Yes, I <span class="ans-aux-match"> have</span>.</div>
-            <div class="ans-item ans-no"><span class="ans-icon">❌</span>No, I <span class="ans-aux-match"> haven’t</span>.</div>
+            <div class="ans-item ans-yes"><span class="ans-icon">✅</span>Yes, I&nbsp;&nbsp;<span class="ans-aux-match">have</span>.</div>
+            <div class="ans-item ans-no"><span class="ans-icon">❌</span>No, I&nbsp;&nbsp;<span class="ans-aux-match">haven’t</span>.</div>
           </div>
         </td>
       </tr>
